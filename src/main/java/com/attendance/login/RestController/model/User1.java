@@ -32,7 +32,7 @@ public class User1 {
     public String para;
     public String last;
 
-    public LocalDate date=LocalDate.now():
+    public LocalDate date=LocalDate.now();
     public String time=LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss a"));
 
    // public LocalTime tim= LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss a")));
