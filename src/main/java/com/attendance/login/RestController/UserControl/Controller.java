@@ -328,6 +328,12 @@ public class Controller {
             return new ResponseEntity<>(HttpStatus.OK);
         } else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    
+     @PostMapping("/date")
+    public LocalDate date() {
+
+        return LocalDate.now();
+    }
 
 
 }
