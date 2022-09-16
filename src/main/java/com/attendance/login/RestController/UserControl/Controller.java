@@ -56,7 +56,7 @@ public class Controller {
     public String Test() {
         rsp = 0;
         String verify = genarator.generateRandom(20);
-        QrCode qrCode = new QrCode();
+        QrCode qrCode = new QrCode();bazelbuild/bazelisk/releasesbazelbuild/bazelisk/releases
 
         qrCode.para = verify;
         qrRepo.save(qrCode);
@@ -314,12 +314,12 @@ public class Controller {
         return userRepository1.deleteByDate(date);
     }
 
-    @PostMapping("/delete-attendance")
-    public ResponseEntity deleteAttendance() {
+//     @PostMapping("/delete-attendance")
+//     public ResponseEntity deleteAttendance() {
 
-        userRepository1.deleteAll();
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+//         userRepository1.deleteAll();
+//         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//     }
 
     @PostMapping("/delete-leave")
     public ResponseEntity deleteLeave(@RequestBody Leave leave) {
