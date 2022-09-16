@@ -57,6 +57,8 @@ public class Controller {
         rsp = 0;
         String verify = genarator.generateRandom(20);
         QrCode qrCode = new QrCode();
+
+        qrCode.para = verify;
         qrRepo.save(qrCode);
         return verify;
     }
@@ -312,12 +314,7 @@ public class Controller {
         return userRepository1.deleteByDate(date);
     }
 
-//     @PostMapping("/delete-attendance")
-//     public ResponseEntity deleteAttendance() {
-
-//         userRepository1.deleteAll();
-//         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//     }
+   
 
     @PostMapping("/delete-leave")
     public ResponseEntity deleteLeave(@RequestBody Leave leave) {
