@@ -314,12 +314,12 @@ public class Controller {
         return userRepository1.deleteByDate(date);
     }
 
-//     @PostMapping("/delete-attendance")
-//     public ResponseEntity deleteAttendance() {
+    @PostMapping("/delete-attendance")
+    public ResponseEntity deleteAttendance() {
 
-//         userRepository1.deleteAll();
-//         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//     }
+        userRepository1.deleteAll();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
     @PostMapping("/delete-leave")
     public ResponseEntity deleteLeave(@RequestBody Leave leave) {
