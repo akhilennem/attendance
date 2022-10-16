@@ -125,7 +125,7 @@ public class Controller {
                 }
                else {
                     if (LocalTime.now().isAfter(LocalTime.parse(("08:36:00"))) && LocalTime.now().isBefore(LocalTime.parse
-                            ("01:30:00")) || LocalTime.now().isAfter(LocalTime.parse(("01:36:00")))) {
+                            ("13:30:00")) || LocalTime.now().isAfter(LocalTime.parse(("13:36:00")))) {
                         if (leaveRepo.existsByEmail(user2.getEmail())) {
                             user2.count = 1;
 //
