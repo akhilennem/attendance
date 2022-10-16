@@ -119,9 +119,41 @@ public class Controller {
                 }
 
             }else {
-                if (LocalTime.now().isAfter(LocalTime.parse(("08:36:00"))) && LocalTime.now().isBefore(LocalTime.parse
-                        ("01:30:00")) || LocalTime.now().isAfter(LocalTime.parse(("01:36:00")))) {
-                    if (leaveRepo.existsByEmail(user2.getEmail())) {
+                if (user2.last.equals("out"))
+                {
+                    return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+                }
+               else {
+                    if (LocalTime.now().isAfter(LocalTime.parse(("08:36:00"))) && LocalTime.now().isBefore(LocalTime.parse
+                            ("01:30:00")) || LocalTime.now().isAfter(LocalTime.parse(("01:36:00")))) {
+                        if (leaveRepo.existsByEmail(user2.getEmail())) {
+                            user2.count = 1;
+//
+                            user2.first_In = user2.time;
+                            userRepository1.save(user2);
+                            rsp = 100;
+
+                            User1 user4;
+                            user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+
+                            if (user4.first_In.contains("AM") || user2.first_In.contains("PM"))
+                                leaveRepo.deleteByEmail(user2.getEmail());
+                            return new ResponseEntity<>(HttpStatus.OK);
+                        } else {
+                            user2.count = 1;
+//                            System.out.println("time is " + time);
+                            user2.first_In = "(Late)" + user2.time;
+                            userRepository1.save(user2);
+                            rsp = 100;
+
+                            User1 user4;
+                            user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+                            if (user4.first_In.contains("AM") || user2.first_In.contains("PM"))
+                                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+                        }
+                    } else {
+
                         user2.count = 1;
 //
                         user2.first_In = user2.time;
@@ -130,45 +162,18 @@ public class Controller {
 
                         User1 user4;
                         user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+                        if (user4.first_In.contains("AM") || user2.first_In.contains("PM")) {
+                            return new ResponseEntity<>(HttpStatus.OK);
+                        } else {
 
-                        if (user4.first_In.contains("AM") || user2.first_In.contains("PM"))
-                            leaveRepo.deleteByEmail(user2.getEmail());
-                        return new ResponseEntity<>(HttpStatus.OK);
-                    } else {
-                        user2.count = 1;
-//                            System.out.println("time is " + time);
-                        user2.first_In = "(Late)" + user2.time;
-                        userRepository1.save(user2);
-                        rsp = 100;
-
-                        User1 user4;
-                        user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-                        if (user4.first_In.contains("AM") || user2.first_In.contains("PM"))
-                            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-
+                            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                        }
                     }
-                } else {
 
-                    user2.count = 1;
-//
-                    user2.first_In = user2.time;
-                    userRepository1.save(user2);
-                    rsp = 100;
+                }  }
 
-                    User1 user4;
-                    user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-                    if (user4.first_In.contains("AM") || user2.first_In.contains("PM")) {
-                        return new ResponseEntity<>(HttpStatus.OK);
-                    } else {
-
-                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                    }
-                }
-
-
-                return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-            }
-
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }
         return null;
     }
