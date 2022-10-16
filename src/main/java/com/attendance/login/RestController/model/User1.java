@@ -20,8 +20,8 @@ public class User1 {
     private int id;
     public String first_In="Not Scanned";
     public String first_out="Not Scanned";
-    public String second_In="Not Scanned";
-    public String second_out="Not Scanned";
+//    public String second_In="Not Scanned";
+//    public String second_out="Not Scanned";
 
     private String name;
 
