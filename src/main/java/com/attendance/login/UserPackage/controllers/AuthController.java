@@ -276,6 +276,14 @@ public ResponseEntity dlt(@RequestBody String email) {
 
     return new ResponseEntity(HttpStatus.CONTINUE);
   }
+  
+   @DeleteMapping("/delete-role")
+  public ResponseEntity deleteRole(@RequestParam int id)
+  {
+    roleRepository.deleteById(id);
+    return new ResponseEntity<>(HttpStatus.ACCEPTED);
+  }
+  
 }
   
 
