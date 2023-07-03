@@ -331,7 +331,7 @@ public class Controller {
     }
 
    @PostMapping("/time")
-    public Object date() {
+    public Object date1() {
          LocalTime currentTime = LocalTime.now(ZoneId.systemDefault());
          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
          String formattedTime = currentTime.format(formatter);
