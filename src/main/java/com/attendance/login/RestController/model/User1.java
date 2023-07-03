@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @Data
@@ -33,7 +34,8 @@ public class User1 {
     public String last;
 
     public LocalDate date=LocalDate.now();
-    public String time=LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss a"));
+    public String time=LocalTime.now(ZoneId.of("Asia/Kolkata")).format(DateTimeFormatter.ofPattern("hh:mm:ss a")).toString();
+    // public String time=LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss a"));
 
    // public LocalTime tim= LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss a")));
 
