@@ -179,9 +179,10 @@ public class Controller {
 //     }
 
 
-     @PostMapping("/save")
+        @PostMapping("/save")
     public ResponseEntity AddUser(@RequestBody User1 user2) {
         System.out.println("time is " + user2.time);
+        LocalTime localTime= LocalTime.parse(user2.time);
 
         LocalDate date = LocalDate.now();
         Details details;
@@ -232,7 +233,7 @@ public class Controller {
                         return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
                     } else {
 
-                        if (LocalTime.now(ZoneId.of("Asia/Kolkata")).isAfter(LocalTime.parse(("14:05:00")))) {
+                        if (localTime.isAfter(LocalTime.parse(("14:05:00")))) {
                             if (leaveRepo.existsByEmail(user2.getEmail())) {
 
                                 user3.count = 3;
@@ -313,7 +314,7 @@ public class Controller {
 
                     return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
                 } else {
-                    if (LocalTime.now(ZoneId.of("Asia/Kolkata")).isAfter(LocalTime.parse(("09:35:00"))) && LocalTime.now(ZoneId.of("Asia/Kolkata")).isBefore(LocalTime.parse("12:00:00")) || LocalTime.now(ZoneId.of("Asia/Kolkata")).isAfter(LocalTime.parse(("14:05:00")))) {
+                    if (localTime.isAfter(LocalTime.parse(("09:35:00"))) && localTime.isBefore(LocalTime.parse("12:00:00")) || localTime.isAfter(LocalTime.parse(("14:05:00")))) {
                         if (leaveRepo.existsByEmail(user2.getEmail())) {
                             user2.count = 1;
                             user2.first_In = user2.time;
