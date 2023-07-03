@@ -446,5 +446,18 @@ public class Controller {
         return LocalDate.now();
     }
 
+@PostMapping("/time")
+    public Object time() {
+//        LocalTime currentTime = LocalTime.now(ZoneId.of("Asia/Kolkata"));
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
+//        String formattedTime = currentTime.format(formatter);
+
+        
+            System.out.println(LocalTime.now(ZoneId.of("Asia/Kolkata")).format(DateTimeFormatter.ofPattern("hh:mm:ss a")).toString());
+            return LocalTime.now(ZoneId.of("Asia/Kolkata")).format(DateTimeFormatter.ofPattern("hh:mm:ss a")).toString();
+     
+
+    }
+    
 
 }
