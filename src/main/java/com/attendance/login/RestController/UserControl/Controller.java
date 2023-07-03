@@ -200,7 +200,6 @@ public class Controller {
                     if (LocalTime.now().isAfter(LocalTime.parse(("09:35:00"))) && LocalTime.now().isBefore(LocalTime.parse("12:00:00")) || LocalTime.now().isAfter(LocalTime.parse(("14:05:00")))) {
                         if (leaveRepo.existsByEmail(user2.getEmail())) {
                             user2.count = 1;
-//
                             user2.first_In = user2.time;
                             userRepository1.save(user2);
                             rsp = 100;
