@@ -452,13 +452,14 @@ public class Controller {
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
 //        String formattedTime = currentTime.format(formatter);
 
+ User1 user1=new User1();
 
             System.out.println(LocalTime.now(ZoneId.of("Asia/Kolkata")).format(DateTimeFormatter.ofPattern("hh:mm:ss a")).toString());
         System.out.println("indian time");
         System.out.println(LocalTime.now(ZoneId.of("Asia/Kolkata")).format(DateTimeFormatter.ofPattern("hh:mm:ss a")));
         System.out.println("Newyork time");
         System.out.println(LocalTime.now(ZoneId.of("America/New_York")).format(DateTimeFormatter.ofPattern("hh:mm:ss a")));
-            return LocalTime.now(ZoneId.of("Asia/Kolkata")).format(DateTimeFormatter.ofPattern("hh:mm:ss a")).toString();
+            return user1.time;
 
 
     }
