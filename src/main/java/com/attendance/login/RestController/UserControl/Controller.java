@@ -333,7 +333,7 @@ public class Controller {
         @PostMapping("/time")
     public LocalDate date() {
 
-        return LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss a");
+        return LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss a"));
     }
 
 
