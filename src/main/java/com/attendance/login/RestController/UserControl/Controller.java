@@ -19,6 +19,7 @@ import java.lang.reflect.Array;
 import java.time.*;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Transactional
 @CrossOrigin
@@ -329,10 +330,12 @@ public class Controller {
         return LocalDate.now();
     }
 
-        @PostMapping("/time")
-    public LocalTime time() {
-
-        return LocalTime.now();
+   @PostMapping("/time")
+    public Object date() {
+         LocalTime currentTime = LocalTime.now(ZoneId.systemDefault());
+         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+         String formattedTime = currentTime.format(formatter);
+         return formattedTime;
     }
 
 
