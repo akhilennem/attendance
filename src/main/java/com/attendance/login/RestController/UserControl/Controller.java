@@ -19,6 +19,7 @@ import java.lang.reflect.Array;
 import java.time.*;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Transactional
 @CrossOrigin
@@ -63,312 +64,314 @@ public class Controller {
         return verify;
     }
 
-//     @PostMapping("/save")
-//     public ResponseEntity AddUser(@RequestBody User1 user2) {
-//         System.out.println("time is " + user2.time);
+     @PostMapping("/save")
+     public ResponseEntity AddUser(@RequestBody User1 user2) {
+         System.out.println("time is " + user2.time);
 
-//         LocalDate date = LocalDate.now();
-//         Details details;
-//         details = detailRepository.getByEmail(user2.getEmail());
-//         System.out.println("details....." + details.batch);
-//         user2.batch = details.batch;
-//         user2.setName(details.getName());
-
-
-//         if (qrRepo.existsByPara(user2.para)) {
-
-//             if (userRepository1.existsByPara(user2.para)) {
+         LocalDate date = LocalDate.now();
+         Details details;
+         details = detailRepository.getByEmail(user2.getEmail());
+         System.out.println("details....." + details.batch);
+         user2.batch = details.batch;
+         user2.setName(details.getName());
 
 
-//                 return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+         if (qrRepo.existsByPara(user2.para)) {
 
-//             }
-//             if (userRepository1.existsByDateAndEmail(date, user2.getEmail())) {
-// //                return new ResponseEntity(HttpStatus.CONFLICT);
-
-//                 User1 user3;
-//                 user3 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-
-//                 if (user3.count == 1) {
-//                     if (user3.last.equals(user2.last)) {
+             if (userRepository1.existsByPara(user2.para)) {
 
 
-//                         return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
-//                     } else {
+                 return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
 
-//                         user3.count = 2;
-//                         user3.first_out = user2.time;
-//                         user3.para = user2.para;
-//                         user3.last = user2.last;
-//                         userRepository1.save(user3);
-//                         rsp = 100;
-//                         User1 user4;
-//                         user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-//                         if (user4.first_out.contains("AM") || user4.first_out.contains("PM")) {
-//                             return new ResponseEntity<>(HttpStatus.GONE);
-//                         } else {
+             }
+             if (userRepository1.existsByDateAndEmail(date, user2.getEmail())) {
+ //                return new ResponseEntity(HttpStatus.CONFLICT);
 
-//                             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//                         }
-//                     }
-//                 }else if (user3.count == 2) {
+                 User1 user3;
+                 user3 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+
+                 if (user3.count == 1) {
+                     if (user3.last.equals(user2.last)) {
 
 
-//                     return new ResponseEntity<>(HttpStatus.LOCKED);
-
-//                 }
-
-//             }else {
-//                 if (user2.last.equals("out"))
-//                 {
-//                     return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
-//                 }
-//                else {
-//                     if (LocalTime.now().isAfter(LocalTime.parse(("08:36:00"))) && LocalTime.now().isBefore(LocalTime.parse
-//                             ("13:00:00")) || LocalTime.now().isAfter(LocalTime.parse(("13:36:00")))) {
-//                         if (leaveRepo.existsByEmail(user2.getEmail())) {
-//                             user2.count = 1;
-// //
-//                             user2.first_In = user2.time;
-//                             userRepository1.save(user2);
-//                             rsp = 100;
-
-//                             User1 user4;
-//                             user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-
-//                             if (user4.first_In.contains("AM") || user2.first_In.contains("PM"))
-//                                 leaveRepo.deleteByEmail(user2.getEmail());
-//                             return new ResponseEntity<>(HttpStatus.OK);
-//                         } else {
-//                             user2.count = 1;
-// //                            System.out.println("time is " + time);
-//                             user2.first_In = "(Late)" + user2.time;
-//                             userRepository1.save(user2);
-//                             rsp = 100;
-
-//                             User1 user4;
-//                             user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-//                             if (user4.first_In.contains("AM") || user2.first_In.contains("PM"))
-//                                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-
-//                         }
-//                     } else {
-
-//                         user2.count = 1;
-// //
-//                         user2.first_In = user2.time;
-//                         userRepository1.save(user2);
-//                         rsp = 100;
-
-//                         User1 user4;
-//                         user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-//                         if (user4.first_In.contains("AM") || user2.first_In.contains("PM")) {
-//                             return new ResponseEntity<>(HttpStatus.OK);
-//                         } else {
-
-//                             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//                         }
-//                     }
-
-//                 }  }
-
-//         }else {
-//             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-//         }
-//         return null;
-//     }
+                         return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+                     } else {
 
 
-        @PostMapping("/save")
-    public ResponseEntity AddUser(@RequestBody User1 user2) {
-        System.out.println("time is " + user2.time);
-        LocalTime localTime= LocalTime.parse(user2.time);
 
-        LocalDate date = LocalDate.now();
-        Details details;
-        details = detailRepository.getByEmail(user2.getEmail());
-        System.out.println("details....." + details.batch);
-        user2.batch = details.batch;
-        user2.setName(details.getName());
+                         user3.count = 2;
+                         user3.first_out = user2.time;
+                         user3.para = user2.para;
+                         user3.last = user2.last;
+                         userRepository1.save(user3);
+                         rsp = 100;
+                         User1 user4;
+                         user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+                         if (user4.first_out.contains("am") || user4.first_out.contains("pm")) {
+                             return new ResponseEntity<>(HttpStatus.GONE);
+                         } else {
 
-
-        if (qrRepo.existsByPara(user2.para)) {
-
-            if (userRepository1.existsByPara(user2.para)) {
-
-
-                return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
-
-            }
-            if (userRepository1.existsByDateAndEmail(date, user2.getEmail())) {
-//                return new ResponseEntity(HttpStatus.CONFLICT);
-
-                User1 user3;
-                user3 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-
-                if (user3.count == 1) {
-                    if (user3.last.equals(user2.last)) {
+                             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                         }
+                     }
+                 }else if (user3.count == 2) {
 
 
-                        return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
-                    } else {
+                     return new ResponseEntity<>(HttpStatus.LOCKED);
 
-                        user3.count = 2;
-                        user3.first_out = user2.time;
-                        user3.para = user2.para;
-                        user3.last = user2.last;
-                        userRepository1.save(user3);
-                        rsp = 100;
-                        User1 user4;
-                        user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-                        if (user4.first_out.contains("AM") || user4.first_out.contains("PM")) {
-                            return new ResponseEntity<>(HttpStatus.GONE);
-                        } else {
+                 }
 
-                            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                        }
-                    }
-                } else if (user3.count == 2) {
-                    if (user3.last.equals(user2.last)) {
-                        return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
-                    } else {
+             }else {
+                 if (user2.last.equals("out"))
+                 {
+                     return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+                 }
+                else {
+                     if (LocalTime.now().isAfter(LocalTime.parse(("08:36:00"))) && LocalTime.now().isBefore(LocalTime.parse
+                             ("13:00:00")) || LocalTime.now().isAfter(LocalTime.parse(("13:36:00")))) {
+                         if (leaveRepo.existsByEmail(user2.getEmail())) {
+                             user2.count = 1;
+ //
+                             user2.first_In = user2.time;
+                             userRepository1.save(user2);
+                             rsp = 100;
 
-                        if (localTime.isAfter(LocalTime.parse(("14:05:00")))) {
-                            if (leaveRepo.existsByEmail(user2.getEmail())) {
+                             User1 user4;
+                             user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
 
-                                user3.count = 3;
-                                user3.second_In = user2.time;
-                                user3.para = user2.para;
-                                user3.last = user2.last;
-                                userRepository1.save(user3);
-                                rsp = 100;
-                                User1 user4;
-                                user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-                                if (user4.second_In.contains("AM") || user4.second_In.contains("PM")) {
-                                    leaveRepo.deleteByEmail(user2.getEmail());
-                                    return new ResponseEntity<>(HttpStatus.OK);
-                                }
+                             if (user4.first_In.contains("am") || user2.first_In.contains("pm"))
+                                 leaveRepo.deleteByEmail(user2.getEmail());
+                             return new ResponseEntity<>(HttpStatus.OK);
+                         } else {
+                             user2.count = 1;
+ //                            System.out.println("time is " + time);
+                             user2.first_In = "(Late)" + user2.time;
+                             userRepository1.save(user2);
+                             rsp = 100;
 
-                            } else {
-                                user3.count = 3;
-                                user3.second_In = "(Late)" + user2.time;
-                                user3.para = user2.para;
-                                user3.last = user2.last;
-                                userRepository1.save(user3);
-                                rsp = 100;
-                                User1 user4;
-                                user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-                                if (user4.second_In.contains("AM") || user4.second_In.contains("PM")) {
-                                    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-                                }
-                            }
-                        } else {
-                            user3.count = 3;
-                            user3.second_In = user2.time;
-                            user3.para = user2.para;
-                            user3.last = user2.last;
-                            userRepository1.save(user3);
-                            rsp = 100;
-                            User1 user4;
-                            user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-                            if (user4.second_In.contains("AM") || user4.second_In.contains("PM")) {
-                                return new ResponseEntity<>(HttpStatus.OK);
-                            } else {
+                             User1 user4;
+                             user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+                             if (user4.first_In.contains("am") || user2.first_In.contains("pm"))
+                                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
-                                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                            }
+                         }
+                     } else {
 
-                        }
-                    }
-                } else if (user3.count == 3) {
-                    if (user3.last.equals(user2.last)) {
-                        return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+                         user2.count = 1;
+ //
+                         user2.first_In = user2.time;
+                         userRepository1.save(user2);
+                         rsp = 100;
 
-                    } else {
+                         User1 user4;
+                         user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+                         if (user4.first_In.contains("am") || user2.first_In.contains("pm")) {
+                             return new ResponseEntity<>(HttpStatus.OK);
+                         } else {
 
-                        user3.count = 4;
-                        user3.second_out = user2.time;
-                        user3.para = user2.para;
-                        user3.last = user2.last;
-                        userRepository1.save(user3);
-                        rsp = 100;
-                        User1 user4;
-                        user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-                        if (user4.second_out.contains("AM") || user4.second_out.contains("PM")) {
-                            return new ResponseEntity<>(HttpStatus.GONE);
-                        } else {
+                             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                         }
+                     }
 
-                            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                        }
+                 }  }
 
-                    }
-                } else if (user3.count == 4) {
+         }else {
+             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+         }
+         return null;
+     }
 
 
-                    return new ResponseEntity<>(HttpStatus.LOCKED);
-
-                }
-
-            } else {
-                if (user2.last.equals("out")) {
-
-                    return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
-                } else {
-                    if (localTime.isAfter(LocalTime.parse(("09:35:00"))) && localTime.isBefore(LocalTime.parse("12:00:00")) || localTime.isAfter(LocalTime.parse(("14:05:00")))) {
-                        if (leaveRepo.existsByEmail(user2.getEmail())) {
-                            user2.count = 1;
-                            user2.first_In = user2.time;
-                            userRepository1.save(user2);
-                            rsp = 100;
-
-                            User1 user4;
-                            user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-
-                            if (user4.first_In.contains("AM") || user2.first_In.contains("PM"))
-                                leaveRepo.deleteByEmail(user2.getEmail());
-                            return new ResponseEntity<>(HttpStatus.OK);
-                        } else {
-                            user2.count = 1;
-//                            System.out.println("time is " + time);
-                            user2.first_In = "(Late)" + user2.time;
-                            userRepository1.save(user2);
-                            rsp = 100;
-
-                            User1 user4;
-                            user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-                            if (user4.first_In.contains("AM") || user2.first_In.contains("PM"))
-                                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-
-                        }
-                    } else {
-
-                        user2.count = 1;
+//        @PostMapping("/save")
+//    public ResponseEntity AddUser(@RequestBody User1 user2) {
+//        System.out.println("time is " + user2.time);
+//        LocalTime localTime= LocalTime.parse(user2.time);
 //
-                        user2.first_In = user2.time;
-                        userRepository1.save(user2);
-                        rsp = 100;
-
-                        User1 user4;
-                        user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
-                        if (user4.first_In.contains("AM") || user2.first_In.contains("PM")) {
-                            return new ResponseEntity<>(HttpStatus.OK);
-                        } else {
-
-                            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                        }
-                    }
-
-
-                }
-
-            }
-        } else {
-
-            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-        }
-
-        return null;
-    }
+//        LocalDate date = LocalDate.now();
+//        Details details;
+//        details = detailRepository.getByEmail(user2.getEmail());
+//        System.out.println("details....." + details.batch);
+//        user2.batch = details.batch;
+//        user2.setName(details.getName());
+//
+//
+//        if (qrRepo.existsByPara(user2.para)) {
+//
+//            if (userRepository1.existsByPara(user2.para)) {
+//
+//
+//                return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+//
+//            }
+//            if (userRepository1.existsByDateAndEmail(date, user2.getEmail())) {
+////                return new ResponseEntity(HttpStatus.CONFLICT);
+//
+//                User1 user3;
+//                user3 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+//
+//                if (user3.count == 1) {
+//                    if (user3.last.equals(user2.last)) {
+//
+//
+//                        return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+//                    } else {
+//
+//                        user3.count = 2;
+//                        user3.first_out = user2.time;
+//                        user3.para = user2.para;
+//                        user3.last = user2.last;
+//                        userRepository1.save(user3);
+//                        rsp = 100;
+//                        User1 user4;
+//                        user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+//                        if (user4.first_out.contains("AM") || user4.first_out.contains("PM")) {
+//                            return new ResponseEntity<>(HttpStatus.GONE);
+//                        } else {
+//
+//                            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//                        }
+//                    }
+//                } else if (user3.count == 2) {
+//                    if (user3.last.equals(user2.last)) {
+//                        return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+//                    } else {
+//
+//                        if (localTime.isAfter(LocalTime.parse(("14:05:00")))) {
+//                            if (leaveRepo.existsByEmail(user2.getEmail())) {
+//
+//                                user3.count = 3;
+//                                user3.second_In = user2.time;
+//                                user3.para = user2.para;
+//                                user3.last = user2.last;
+//                                userRepository1.save(user3);
+//                                rsp = 100;
+//                                User1 user4;
+//                                user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+//                                if (user4.second_In.contains("AM") || user4.second_In.contains("PM")) {
+//                                    leaveRepo.deleteByEmail(user2.getEmail());
+//                                    return new ResponseEntity<>(HttpStatus.OK);
+//                                }
+//
+//                            } else {
+//                                user3.count = 3;
+//                                user3.second_In = "(Late)" + user2.time;
+//                                user3.para = user2.para;
+//                                user3.last = user2.last;
+//                                userRepository1.save(user3);
+//                                rsp = 100;
+//                                User1 user4;
+//                                user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+//                                if (user4.second_In.contains("AM") || user4.second_In.contains("PM")) {
+//                                    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//                                }
+//                            }
+//                        } else {
+//                            user3.count = 3;
+//                            user3.second_In = user2.time;
+//                            user3.para = user2.para;
+//                            user3.last = user2.last;
+//                            userRepository1.save(user3);
+//                            rsp = 100;
+//                            User1 user4;
+//                            user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+//                            if (user4.second_In.contains("AM") || user4.second_In.contains("PM")) {
+//                                return new ResponseEntity<>(HttpStatus.OK);
+//                            } else {
+//
+//                                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//                            }
+//
+//                        }
+//                    }
+//                } else if (user3.count == 3) {
+//                    if (user3.last.equals(user2.last)) {
+//                        return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+//
+//                    } else {
+//
+//                        user3.count = 4;
+//                        user3.second_out = user2.time;
+//                        user3.para = user2.para;
+//                        user3.last = user2.last;
+//                        userRepository1.save(user3);
+//                        rsp = 100;
+//                        User1 user4;
+//                        user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+//                        if (user4.second_out.contains("AM") || user4.second_out.contains("PM")) {
+//                            return new ResponseEntity<>(HttpStatus.GONE);
+//                        } else {
+//
+//                            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//                        }
+//
+//                    }
+//                } else if (user3.count == 4) {
+//
+//
+//                    return new ResponseEntity<>(HttpStatus.LOCKED);
+//
+//                }
+//
+//            } else {
+//                if (user2.last.equals("out")) {
+//
+//                    return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+//                } else {
+//                    if (localTime.isAfter(LocalTime.parse(("09:35:00"))) && localTime.isBefore(LocalTime.parse("12:00:00")) || localTime.isAfter(LocalTime.parse(("14:05:00")))) {
+//                        if (leaveRepo.existsByEmail(user2.getEmail())) {
+//                            user2.count = 1;
+//                            user2.first_In = user2.time;
+//                            userRepository1.save(user2);
+//                            rsp = 100;
+//
+//                            User1 user4;
+//                            user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+//
+//                            if (user4.first_In.contains("AM") || user2.first_In.contains("PM"))
+//                                leaveRepo.deleteByEmail(user2.getEmail());
+//                            return new ResponseEntity<>(HttpStatus.OK);
+//                        } else {
+//                            user2.count = 1;
+////                            System.out.println("time is " + time);
+//                            user2.first_In = "(Late)" + user2.time;
+//                            userRepository1.save(user2);
+//                            rsp = 100;
+//
+//                            User1 user4;
+//                            user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+//                            if (user4.first_In.contains("AM") || user2.first_In.contains("PM"))
+//                                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//
+//                        }
+//                    } else {
+//
+//                        user2.count = 1;
+////
+//                        user2.first_In = user2.time;
+//                        userRepository1.save(user2);
+//                        rsp = 100;
+//
+//                        User1 user4;
+//                        user4 = userRepository1.getByDateAndEmail(date, user2.getEmail());
+//                        if (user4.first_In.contains("AM") || user2.first_In.contains("PM")) {
+//                            return new ResponseEntity<>(HttpStatus.OK);
+//                        } else {
+//
+//                            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//                        }
+//                    }
+//
+//
+//                }
+//
+//            }
+//        } else {
+//
+//            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+//        }
+//
+//        return null;
+//    }
 
 
     
